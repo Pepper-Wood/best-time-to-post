@@ -6,19 +6,21 @@
   #charttable {
     width: 100%;
   }
-  .table td, .table th {
-    padding: 0;
-    padding-top: 1em;
-    border-width: 1px;
-    border-color: transparent;
-  }
   .currentColor {
     width: 100px;
     height: 100px;
     display: block;
   }
-  .currentTime {
-    border: 1px solid #ff00ff !important;
+  table td.currentTime {
+    border: 1px dotted #4a4a4a;
+  }
+  table td.dayOfTheWeek {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 0.5em;
+  }
+  .source {
+    padding: 1em;
   }
   .color0 { background-color: #f3fdff; }
   .color1 { background-color: #e8f7fe; }
@@ -36,14 +38,15 @@
   <div class="hero-body">
     <div class="container has-text-centered">
       <div class="column is-6 is-offset-3">
-          <h1 class="title">Coming Soon</h1>
-          <h2 class="subtitle">$this is the best software platform for running an internet business. We handle billions of dollars every year for forward-thinking businesses around the world.</h2>
-          <div class="box">
-            <table id="charttable" class="table"></table>
-          </div>
+        <h1 class="title">Coming Soon</h1>
+        <h2 class="subtitle">$this is the best software platform for running an internet business. We handle billions of dollars every year for forward-thinking businesses around the world.</h2>
+        <div class="box">
+          <table id="charttable"></table>
+        </div>
       </div>
     </div>
   </div>
+  <p class="source">Source: <a target="_Blank" href="https://sproutsocial.com/insights/best-times-to-post-on-social-media">"The best times to post on social media in 2020", SproutSocial</a></p>
 </section>
 
 <script>
@@ -59,17 +62,26 @@ let twitter_media = [
 
 function getChartTableHTML(current_media, day_index, hour_index) {
   let htmlstring = "";
+  let daystrings = ["M", "T", "W", "T", "F", "S", "S"];
   for (let i=0; i<current_media.length; i++) {
-    htmlstring += "<tr>";
+    htmlstring += `<tr><td class='dayOfTheWeek'>${daystrings[i]}</td>`;
     for (let j=0; j<current_media[i].length; j++) {
       if ((i == day_index) && (j == hour_index)) {
-        htmlstring += "<td class='square currentTime color" + current_media[i][j] + "'></td>";
+        htmlstring += `<td class='currentTime color${current_media[i][j]}'>&nbsp;&nbsp;</td>`;
       } else {
-        htmlstring += "<td class='square color" + current_media[i][j] + "'></td>";
+        htmlstring += `<td class='color${current_media[i][j]}'>&nbsp;&nbsp;</td>`;
       }
     }
     htmlstring += "</tr>";
   }
+  // Append on the hours as a row of numbers
+  /*
+  htmlstring += "<tr><td></td>";
+  for (let i=0; i<current_media[0].length; i++) {
+    htmlstring += `<td>${i}</td>`;
+  }
+  htmlstring += "</tr>";
+  */
   return htmlstring;
 }
 
