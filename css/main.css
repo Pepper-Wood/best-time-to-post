@@ -1,0 +1,36 @@
+#hero {
+    -webkit-transition: background-color 0.5s ease-in-out;
+    -moz-transition: background-color 0.5s ease-in-out;
+    -o-transition: background-color 0.5s ease-in-out;
+    -khtml-transition: background-color 0.5s ease-in-out;
+    transition: background-color 0.5s ease-in-out;
+}
+#charttable {
+    width: 100%;
+}
+.currentColor {
+    width: 100px;
+    height: 100px;
+    display: block;
+}
+table td.currentTime {
+    border: 1px dotted #4a4a4a;
+}
+table td.dayOfTheWeek {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 0.5em;
+}
+.source {
+    padding: 1em;
+}
+.color0 { background-color: #f3fdff; }
+.color1 { background-color: #e8f7fe; }
+.color2 { background-color: #d2ecfd; }
+.color3 { background-color: #a5d9f6; }
+.color4 { background-color: #60bdf6; }
+.color5 { background-color: #1da1f3; }
+.color6 { background-color: #1A91DA; }
+.color7 { background-color: #1674b1; }
+.color8 { background-color: #0b344f; }
+.color9 { background-color: #ff00ff; } /* used for debug purposes for setting up the graphs */

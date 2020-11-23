@@ -1,47 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="bulma.min.css">
-<script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
-<style>
-  #hero {
-    -webkit-transition: background-color 0.5s ease-in-out;
-    -moz-transition: background-color 0.5s ease-in-out;
-    -o-transition: background-color 0.5s ease-in-out;
-    -khtml-transition: background-color 0.5s ease-in-out;
-    transition: background-color 0.5s ease-in-out;
-  }
-  #charttable {
-    width: 100%;
-  }
-  .currentColor {
-    width: 100px;
-    height: 100px;
-    display: block;
-  }
-  table td.currentTime {
-    border: 1px dotted #4a4a4a;
-  }
-  table td.dayOfTheWeek {
-    font-weight: bold;
-    text-align: right;
-    padding-right: 0.5em;
-  }
-  .source {
-    padding: 1em;
-  }
-  .color0 { background-color: #f3fdff; }
-  .color1 { background-color: #e8f7fe; }
-  .color2 { background-color: #d2ecfd; }
-  .color3 { background-color: #a5d9f6; }
-  .color4 { background-color: #60bdf6; }
-  .color5 { background-color: #1da1f3; }
-  .color6 { background-color: #1A91DA; }
-  .color7 { background-color: #1674b1; }
-  .color8 { background-color: #0b344f; }
-  .color9 { background-color: #ff00ff; } /* used for debug purposes for setting up the graphs */
-
-</style>
+  <link rel="stylesheet" href="css/bulma.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 </head>
 <body>
 
@@ -75,16 +37,6 @@
         <div class="navbar-item">
           <div class="field is-grouped">
             <p class="control">
-              <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="https://bulma.io" target="_blank" href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
-                <span class="icon">
-                  <i class="fab fa-twitter"></i>
-                </span>
-                <span>
-                  Tweet
-                </span>
-              </a>
-            </p>
-            <p class="control">
               <a class="bd-tw-button button" href="https://github.com/Pepper-Wood/socialmedia-engagement">
                 <span class="icon">
                   <i class="fab fa-github"></i>
@@ -112,178 +64,8 @@
   <p class="source">Source: <a target="_Blank" href="https://sproutsocial.com/insights/best-times-to-post-on-social-media">"The best times to post on social media in 2020", SproutSocial</a></p>
 </section>
 
-<script>
-let twitter_global = [
-  [0,0,0,1,2,2,3,3,5,6,7,5,5,5,5,5,5,4,3,4,3,2,2,1], // Mon
-  [0,0,0,1,1,2,3,5,5,7,7,7,6,6,5,5,5,4,5,6,6,3,2,1], // Tues
-  [1,0,0,1,2,3,4,5,7,8,7,7,6,6,6,5,5,4,3,5,4,3,2,1], // Wed
-  [0,0,0,0,2,2,3,4,5,7,6,6,5,5,5,5,4,4,4,4,4,3,1,0], // Thurs
-  [1,1,1,1,3,4,5,6,7,8,7,7,6,6,5,5,4,4,3,3,3,2,1,0], // Fri
-  [1,0,1,3,1,2,2,3,4,7,6,5,4,4,4,4,3,3,2,2,2,2,1,0], // Sat
-  [0,0,0,0,1,1,2,3,4,6,5,6,5,5,5,5,4,4,4,5,3,2,1,0]  // Sun
-];
-let twitter_goods = [
-  [0,0,0,0,1,2,2,2,3,4,3,3,4,4,5,5,3,2,2,1,3,2,1,1], // Mon
-  [1,0,0,1,1,1,2,2,3,3,4,4,5,5,5,5,4,3,4,3,3,2,2,1], // Tues
-  [1,0,0,1,1,1,2,2,3,4,4,5,5,7,6,5,4,4,3,3,4,3,2,2], // Wed
-  [1,0,0,1,1,1,1,2,2,3,3,4,6,4,3,4,3,3,3,2,3,3,2,1], // Thurs
-  [1,0,0,1,1,2,2,2,3,3,4,4,4,5,4,5,3,3,2,2,3,2,2,1], // Fri
-  [1,1,1,1,1,1,1,2,3,3,4,4,4,4,5,7,3,3,3,4,4,4,3,2], // Sat
-  [2,1,1,1,1,1,2,3,4,6,7,8,7,6,7,6,5,4,3,3,3,3,2,1]  // Sun
-];
-let twitter_media = [
-  [0,0,0,0,1,2,3,3,4,5,5,4,5,5,3,3,3,2,2,2,2,3,2,0], // Mon
-  [1,1,1,1,2,1,2,3,5,7,5,5,5,4,4,3,3,3,2,2,2,2,0,0], // Tues
-  [1,1,1,2,2,3,4,7,8,7,5,7,7,4,3,4,4,4,4,3,3,3,0,0], // Wed
-  [1,1,1,1,1,2,3,5,7,8,7,7,5,4,4,4,7,7,4,3,8,2,4,3], // Thurs
-  [3,3,3,3,3,4,5,7,7,7,7,7,5,5,4,3,3,2,2,2,2,2,0,0], // Fri
-  [1,1,0,1,1,2,2,2,2,4,4,4,3,3,3,3,2,2,2,2,2,1,1,1], // Sat
-  [1,1,1,1,1,2,4,5,4,5,5,4,3,3,3,3,2,2,2,2,2,2,0,0]  // Sun
-];
-let all_categories = {
-  "twitter_global": {
-    "data": twitter_global,
-    "title": "Twitter Global"
-  },
-  "twitter_goods": {
-    "data": twitter_goods,
-    "title": "Twitter Consumer Goods"
-  },
-  "twitter_media": {
-    "data": twitter_media,
-    "title": "Twitter Media"
-  }
-};
-
-function getChartTableHTML(current_media, day_index, hour_index) {
-  let htmlstring = "";
-  let daystrings = ["M", "T", "W", "T", "F", "S", "S"];
-  for (let i=0; i<current_media.length; i++) {
-    htmlstring += `<tr><td class='dayOfTheWeek'>${daystrings[i]}</td>`;
-    for (let j=0; j<current_media[i].length; j++) {
-      if ((i == day_index) && (j == hour_index)) {
-        htmlstring += `<td class='currentTime color${current_media[i][j]}'>&nbsp;&nbsp;</td>`;
-      } else {
-        htmlstring += `<td class='color${current_media[i][j]}'>&nbsp;&nbsp;</td>`;
-      }
-    }
-    htmlstring += "</tr>";
-  }
-  return htmlstring;
-}
-
-function createPage(current_media_string, day_index, hour_index) {
-  current_media = all_categories[current_media_string]["data"];
-  current_num = current_media[day_index][hour_index];
-
-  document.getElementById("hero").removeAttribute("class");
-  let classes = ["hero", "is-fullheight", `color${current_num}`];
-  for (let i=0; i<classes.length; i++) {
-    document.getElementById("hero").classList.add(classes[i]);
-  }
-
-  document.getElementById("charttable").innerHTML = getChartTableHTML(current_media, day_index, hour_index);
-
-  document.getElementById("center_title").innerHTML = all_categories[current_media_string]["title"] + " Engagement";
-
-  let phrases = [
-    "Lowest",
-    "Near-lowest",
-    "Low",
-    "Slightly-lower",
-    "Neutral",
-    "Slightly-higher",
-    "High",
-    "Near-highest",
-    "Highest"
-  ]
-  document.getElementById("center_subtitle").innerHTML = `${phrases[current_num]} engagement expected if posting at this time.`;
-}
-
-function getCurrentIndices() {
-  var todayCST = new Date().toLocaleString("en-US", {
-    timeZone: "America/Chicago"
-  });
-  todayCST = new Date(todayCST);
-  day_index = todayCST.getDay();
-  // This behavior is due to the reference chart showing Sunday as the last day of the week and not the first.
-  if (day_index == 0) {
-    // Sunday gets changed to 6
-    day_index = 6
-  } else {
-    // All other days need to have their index decreased by 1;
-    day_index -= 1;
-  }
-  hour_index = todayCST.getHours();
-  return [day_index, hour_index];
-}
-
-function refreshPage() {
-  let indices = getCurrentIndices();
-  const active = document.querySelector('.active');
-  default_media = "twitter_global";
-  if (active) {
-    default_media = active.id;
-  }
-  createPage(default_media, indices[0], indices[1]);
-}
-
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  // Initialize the navbar.
-  // Get all "navbar-burger" elements
-  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-  // Check if there are any navbar burgers
-  if ($navbarBurgers.length > 0) {
-
-    // Add a click event on each of them
-    $navbarBurgers.forEach( el => {
-      el.addEventListener('click', () => {
-
-        // Get the target from the "data-target" attribute
-        const target = el.dataset.target;
-        const $target = document.getElementById(target);
-
-        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-        el.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-
-      });
-    });
-  }
-
-  // Initialize twitter_global as the default
-  let indices = getCurrentIndices();
-  createPage("twitter_global", indices[0], indices[1]);
-
-  // Rerun above every 15 minutes
-  setInterval(refreshPage, 1000 * 60 * 15);
-
-  // Onclick for .clickable-filter handling.
-  document.addEventListener('click', function (event) {
-
-    // If the clicked element doesn't have the right selector, bail
-    if (!event.target.matches('.clickable-filter')) return;
-
-    // Don't follow the link
-    event.preventDefault();
-
-    // remove all other elements tagged with active class
-    const active = document.querySelector('.active');
-    if (active) {
-      active.classList.remove('active');
-    }
-    // add active to the clicked filter
-    event.target.classList.toggle('active');
-    createPage(event.target.id, indices[0], indices[1]);
-
-  }, false);
-
-
-});
-</script>
+<script src="js/all_categories.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>
