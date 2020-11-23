@@ -3,6 +3,9 @@
  * Implements all javascript-based page interations.
  */
 
+/* Starting posting media to display */
+const DEFAULT_MEDIA = "twitter_global";
+
 /**
  * Gets the HTML for the engagement across days and hours table.
  * @param {obj} current_media Object representing current media to render table from.
@@ -84,17 +87,17 @@ function getCurrentIndices() {
 }
 
 /**
- * Calls createPage() with media set to what is currently active, otherwise twitter_global. Used
+ * Calls createPage() with media set to what is currently active, otherwise DEFAULT_MEDIA. Used
  *     as the refresh call on the page every 15 minutes.
  */
 function refreshPage() {
     let indices = getCurrentIndices();
     const active = document.querySelector('.active');
-    default_media = "twitter_global";
     if (active) {
-        default_media = active.id;
+        createPage(active.id, indices[0], indices[1]);
+    } else {
+        createPage(DEFAULT_MEDIA, indices[0], indices[1]);
     }
-    createPage(default_media, indices[0], indices[1]);
 }
 
 /**
@@ -116,9 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Initialize twitter_global as the default current_media to display.
+    // Initialize DEFAULT_MEDIA as the default current_media to display.
     let indices = getCurrentIndices();
-    createPage("twitter_global", indices[0], indices[1]);
+    createPage(DEFAULT_MEDIA, indices[0], indices[1]);
 
     // Refresh the page every 15 minutes.
     setInterval(refreshPage, 1000 * 60 * 15);
