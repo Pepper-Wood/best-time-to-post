@@ -1,5 +1,15 @@
+/**
+ * main.js
+ * Implements all javascript-based page interations.
+ */
 
-
+/**
+ * Gets the HTML for the engagement across days and hours table.
+ * @param {obj} current_media Object representing current media to render table from.
+ * @param {int} day_index The current day of the week as an integer index.
+ * @param {int} hour_index The current hour (in CST) as an integer index.
+ * @return {string} innerHTML of the <table> returned as a string.
+ */
 function getChartTableHTML(current_media, day_index, hour_index) {
     let htmlstring = "";
     let daystrings = ["M", "T", "W", "T", "F", "S", "S"];
@@ -17,6 +27,12 @@ function getChartTableHTML(current_media, day_index, hour_index) {
     return htmlstring;
 }
 
+/**
+ * Main function called for stitching together the data results with the page UI.
+ * @param {string} current_media_string String name of current_media to lookup in all_categories.
+ * @param {int} day_index The current day of the week as an integer index.
+ * @param {int} hour_index The current hour (in CST) as an integer index.
+ */
 function createPage(current_media_string, day_index, hour_index) {
     current_media = all_categories[current_media_string]["data"];
     current_num = current_media[day_index][hour_index];
@@ -45,6 +61,10 @@ function createPage(current_media_string, day_index, hour_index) {
     document.getElementById("center_subtitle").innerHTML = `${phrases[current_num]} engagement expected if posting at this time.`;
 }
 
+/**
+ * Return the current day of the week and the current hour, both as integer indices and in the CST timezone.
+ * @return {Array.<int>} An array of size 2 containing the day_index and the hour_index.
+ */
 function getCurrentIndices() {
     var todayCST = new Date().toLocaleString("en-US", {
         timeZone: "America/Chicago"
@@ -63,6 +83,10 @@ function getCurrentIndices() {
     return [day_index, hour_index];
 }
 
+/**
+ * Calls createPage() with media set to what is currently active, otherwise twitter_global. Used
+ *     as the refresh call on the page every 15 minutes.
+ */
 function refreshPage() {
     let indices = getCurrentIndices();
     const active = document.querySelector('.active');
@@ -73,58 +97,46 @@ function refreshPage() {
     createPage(default_media, indices[0], indices[1]);
 }
 
-
+/**
+ * Initialize page.
+ */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Initialize the navbar.
-    // Get all "navbar-burger" elements
+    // Initialize the Bulma navbar.
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-    // Check if there are any navbar burgers
     if ($navbarBurgers.length > 0) {
-
-        // Add a click event on each of them
         $navbarBurgers.forEach( el => {
             el.addEventListener('click', () => {
-    
-            // Get the target from the "data-target" attribute
-            const target = el.dataset.target;
-            const $target = document.getElementById(target);
-    
-            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-            el.classList.toggle('is-active');
-            $target.classList.toggle('is-active');
-    
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
             });
         });
     }
 
-    // Initialize twitter_global as the default
+    // Initialize twitter_global as the default current_media to display.
     let indices = getCurrentIndices();
     createPage("twitter_global", indices[0], indices[1]);
 
-    // Rerun above every 15 minutes
+    // Refresh the page every 15 minutes.
     setInterval(refreshPage, 1000 * 60 * 15);
 
-    // Onclick for .clickable-filter handling.
+    // Initialize on-click for .clickable-filter handling.
     document.addEventListener('click', function (event) {
-
-        // If the clicked element doesn't have the right selector, bail
         if (!event.target.matches('.clickable-filter')) return;
-    
-        // Don't follow the link
         event.preventDefault();
-    
-        // remove all other elements tagged with active class
+
+        // Remove all other elements tagged with active class.
         const active = document.querySelector('.active');
         if (active) {
             active.classList.remove('active');
         }
-        // add active to the clicked filter
+
+        // Add active to the clicked filter.
         event.target.classList.toggle('active');
         createPage(event.target.id, indices[0], indices[1]);
-
     }, false);
-
 
 });
